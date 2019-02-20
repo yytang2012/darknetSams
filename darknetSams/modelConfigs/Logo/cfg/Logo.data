@@ -1,0 +1,6 @@
+classes = 31
+train   = train.txt
+valid   = test.txt
+names   = modelConfigs/Logo/cfg//Logo.names
+backup  = backup
+results = results

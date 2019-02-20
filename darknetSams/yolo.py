@@ -23,7 +23,7 @@ Directly viewing or returning bounding-boxed images requires scikit-image to be 
 Original *nix 2.7: https://github.com/pjreddie/darknet/blob/0f110834f4e18b30d5f101bf8f1724c34b7b83db/python/darknet.py
 Windows Python 2.7 version: https://github.com/AlexeyAB/darknet/blob/fc496d52bf22a0bb257300d3c79be9cd80e722cb/build/darknet/x64/darknet.py
 
-@author: Philip Kahn
+@author: Philip Kahn, Yutao Tang
 @date: 20180503
 """
 import os
@@ -37,6 +37,9 @@ import cv2
 from darknetSams.settings import logo_conf, DARKNET_ROOT
 from darknetSams.visualize import draw_result
 
+# Root directory of the project
+ROOT_DIR = os.path.dirname(__file__)
+os.chdir(ROOT_DIR)
 
 def sample(probs):
     s = sum(probs)
@@ -237,7 +240,6 @@ class DarknetSams:
         return res
 
     def detect_frame(self, image, thresh=0.5, hier_thresh=.25, nms=.45, verbose=0, draw_results=False):
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         im, arr = array_to_image(image)
         num = c_int(0)
         pnum = pointer(num)

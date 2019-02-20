@@ -1,0 +1,6 @@
+classes = 3
+train   = train.txt
+valid   = test.txt
+names   = modelConfigs/Cart/cfg//Cart.names
+backup  = backup
+results = results
