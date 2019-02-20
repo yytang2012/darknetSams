@@ -1,2 +1,4 @@
 pytest
 pycodestyle
+opencv-python
+tqdm

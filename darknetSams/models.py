@@ -7,7 +7,8 @@ class Logo(DarknetSams):
         config_path = logo_conf["config"]
         weight_path = logo_conf["weight"]
         meta_path = logo_conf["meta"]
-        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path)
+        url = logo_conf["url"]
+        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path, url=url)
 
 
 class Cart(DarknetSams):
@@ -15,7 +16,8 @@ class Cart(DarknetSams):
         config_path = cart_conf["config"]
         weight_path = cart_conf["weight"]
         meta_path = cart_conf["meta"]
-        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path)
+        url = cart_conf["url"]
+        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path, url=url)
 
 
 class Coco(DarknetSams):
@@ -23,9 +25,6 @@ class Coco(DarknetSams):
         config_path = coco_conf["config"]
         weight_path = coco_conf["weight"]
         meta_path = coco_conf["meta"]
-        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path)
+        url = coco_conf["url"]
+        super().__init__(config_path=config_path, weight_path=weight_path, meta_path=meta_path, url=url)
 
-
-
-if __name__ == '__main__':
-    coco = Coco()

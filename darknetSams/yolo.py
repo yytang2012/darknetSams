@@ -30,11 +30,13 @@ import os
 import random
 # pylint: disable=R, W0401, W0614, W0703
 from ctypes import *
-import cv2
 
 # Ensure you point to the correct path where models are located
 # Root directory of the project
+import cv2
+
 from darknetSams.settings import logo_conf, DARKNET_ROOT
+from darknetSams.utils import download_trained_weights
 from darknetSams.visualize import draw_result
 
 # Root directory of the project
@@ -222,11 +224,15 @@ predict_image.restype = POINTER(c_float)
 
 
 class DarknetSams:
-    def __init__(self, config_path=None, weight_path=None, meta_path=None):
+    def __init__(self, config_path=None, weight_path=None, meta_path=None, url=None):
         if config_path is None:
             config_path = logo_conf["config"]
             weight_path = logo_conf["weight"]
             meta_path = logo_conf["meta"]
+            url = logo_conf["url"]
+
+        if os.path.isfile(weight_path) is False:
+            download_trained_weights(url, weight_path)
         self.net_main = load_net_custom(config_path.encode("ascii"), weight_path.encode("ascii"), 0, 1)
         self.meta_main = load_meta(meta_path.encode("ascii"))
 
@@ -240,6 +246,7 @@ class DarknetSams:
         return res
 
     def detect_frame(self, image, thresh=0.5, hier_thresh=.25, nms=.45, verbose=0, draw_results=False):
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         im, arr = array_to_image(image)
         num = c_int(0)
         pnum = pointer(num)
@@ -270,28 +277,3 @@ class DarknetSams:
         else:
             out_image = image
         return out_image, detections
-
-
-if __name__ == "__main__":
-    # image_path = os.path.join(darknet_root, "data/dog.jpg")
-    image_path = '/home/yytang/Downloads/media/1.jpg'
-    darknet_obj = DarknetSams()
-
-    # results = darknet_obj.perform_detect(image_path=image_path, show_image=True)
-    # results = darknet_obj.detect(image_path, show_image=True)
-    im = cv2.imread(image_path)
-    output_img, results = darknet_obj.detect_frame(im, draw_results=True)
-    print(results)
-
-    # output_img = draw_result(im, results)
-    cv2.imshow('image', output_img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-    # with open('yolo_item_map') as f:
-    #     d = {}
-    #     for line in f.readlines():
-    #         s1, s2 = line.split(':')[:2]
-    #         dst = int(s2.strip())
-    #         d[s1] = dst
-    #     print(d.items())
