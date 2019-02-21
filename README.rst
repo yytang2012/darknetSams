@@ -4,13 +4,10 @@
    :target: ../master/LICENSE
 
 
-Somepackage
+darknetSams
 ===========
 
-Show how to structure a Python project.
-
-Inspired by https://github.com/kennethreitz/samplemod.
-
+Provide a package for coco, cart and logo detection
 
 Great resources
 ===============

@@ -25,16 +25,24 @@ setup(
     url='https://github.com/yytang2012/darknetSams.git',
     license='MPL-2.0',
     packages=['darknetSams'],
-#   no dependencies in this example
-#   install_requires=[
-#       'dependency==1.2.3',
-#   ],
-#   no scripts in this example
-#   scripts=['bin/a-script'],
+    #   no dependencies in this example
+    #   install_requires=[
+    #       'dependency==1.2.3',
+    #   ],
+    #   no scripts in this example
+    #   scripts=['bin/a-script'],
     include_package_data=True,
+    package_data={
+        "darknetSams": [
+            "modelConfigs/Cart/cfg/*",
+            "modelConfigs/Coco/cfg/*",
+            "modelConfigs/Logo/cfg/*",
+            "darknet.so"
+        ],
+    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.6'],
-    )
+)
