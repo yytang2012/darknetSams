@@ -1,13 +1,51 @@
-.. image:: https://travis-ci.org/bast/somepackage.svg?branch=master
-   :target: https://travis-ci.org/bast/somepackage/builds
-.. image:: https://img.shields.io/badge/license-%20MPL--v2.0-blue.svg
-   :target: ../master/LICENSE
-
-
-darknetSams
-===========
+# darknetSams
 
 Provide a package for coco, cart and logo detection
+
+Need to compile the darknet and provide libdarknet.so to the library path.
+
+Prerequisites:
+
+    sudo apt-get -y install cmake git libopenexr-dev python3-tk
+    pip3 install --user Cython
+
+
+
+# Install opencv 3.4
+
+    export OPENCV_ROOT=~/Downloads/
+    cd $OPENCV_ROOT && git clone https://github.com/opencv/opencv_contrib.git && \
+        cd opencv_contrib && git checkout tags/3.4.0 && \
+        cd $OPENCV_ROOT && git clone https://github.com/opencv/opencv.git && \
+        cd opencv && git checkout tags/3.4.0 && mkdir -p build && cd build && \
+        cmake -D CMAKE_BUILD_TYPE=Release \
+        cmake -D WITH_TBB=ON -D WITH_OPENMP=ON -D WITH_IPP=ON -D BUILD_PNG=ON \
+        -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_ROOT/opencv_contrib/modules \
+        -D CMAKE_BUILD_TYPE=RELEASE -D BUILD_EXAMPLES=OFF -D WITH_QT=OFF \
+        -D WITH_CUDA=OFF -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF \
+        -D WITH_CSTRIPES=ON -D WITH_OPENCL=ON -D BUILD_opencv_cnn_3dobj=OFF \
+        -D CMAKE_INSTALL_PREFIX=/usr/local/ -D BUILD_TESTS=OFF -D WITH_NVCUVID=ON \
+        -D BUILD_opencv_dnn_modern=OFF -D WITH_GTK=ON -D WITH_GTK_2_X=ON .. && \
+        make -j$(nproc) && sudo make install && sudo ldconfig && cd $OPENCV_ROOT && rm -Rf opencv_contrib && rm -Rf opencv
+
+
+1. Run the following command to get the darknet project
+
+    - git clone https://github.com/AlexeyAB/darknet.git
+
+    - vim Makefile, and modify the following parameters
+    
+            GPU=1
+            CUDNN=1
+            CUDNN_HALF=0
+            OPENCV=1
+            AVX=0
+            OPENMP=0
+            LIBSO=1
+     
+     - make $(nproc)
+
+2. copy the libdarknet.so to the right path
 
 Great resources
 ===============

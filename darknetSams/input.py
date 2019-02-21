@@ -74,6 +74,6 @@ def video(video_path, model="coco"):
 
 
 if __name__ == '__main__':
-    # camera(model="cart", camera_id=0)
-    video_path = os.path.join("~/Documents", "videos", "20190217", "94", "20190217-103033-0.avi")
-    video(video_path, model="cart")
+    camera(model="cart", camera_id=0)
+    # video_path = os.path.join("~/Documents", "videos", "20190217", "94", "20190217-103033-0.avi")
+    # video(video_path, model="cart")
