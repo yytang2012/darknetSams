@@ -1,4 +1,5 @@
 from setuptools import setup
+from setuptools.command.install import install as _install
 import os
 import sys
 
@@ -14,6 +15,18 @@ else:
 version = {}
 with open(os.path.join(_here, 'darknetSams', 'version.py')) as f:
     exec(f.read(), version)
+
+
+class install(_install):
+    def run(self):
+        _install.run(self)
+
+        libso_path = os.path.join(_here, "darknetSams", "libdarknet.so")
+        if os.path.isfile(libso_path) is False:
+            dir_path = os.path.join(_here, "darknet")
+            if os.path.isdir(dir_path) is False:
+                os.system("git clone https://github.com/yytang2012/darknet.git")
+            os.system("cd {} && git pull && make -j$(nproc) && mv libdarknet.so {}".format(dir_path, libso_path))
 
 setup(
     name='darknetSams',
@@ -37,9 +50,10 @@ setup(
             "modelConfigs/Cart/cfg/*",
             "modelConfigs/Coco/cfg/*",
             "modelConfigs/Logo/cfg/*",
-            "darknet.so"
+            "libdarknet.so"
         ],
     },
+    cmdclass={'install': install},
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',

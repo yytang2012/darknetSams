@@ -4,6 +4,7 @@ __pycache__/
 .idea/
 build/
 dist/
-somepackage.egg-info/
+darknetSams.egg-info/
 weights
-darknet.so
+*.so
+darknet

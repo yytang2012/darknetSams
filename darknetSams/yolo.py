@@ -147,8 +147,14 @@ if os.name == "nt":
             print(
                 "Environment variables indicated a CPU run, but we didn't find `" + winNoGPUdll + "`. Trying a GPU run anyway.")
 else:
-    lib_path = os.path.join(DARKNET_ROOT, "darknet.so")
-    lib = CDLL(lib_path, RTLD_GLOBAL)
+    lib_so_1 = os.path.join(DARKNET_ROOT, "darknet.so")
+    lib_so_2 = os.path.join(DARKNET_ROOT, "libdarknet.so")
+    assert os.path.isfile(lib_so_1) is True or os.path.isfile(lib_so_2) is True
+    if os.path.isfile(lib_so_1) is True:
+        lib = CDLL(lib_so_1, RTLD_GLOBAL)
+    else:
+        lib = CDLL(lib_so_2, RTLD_GLOBAL)
+
 lib.network_width.argtypes = [c_void_p]
 lib.network_width.restype = c_int
 lib.network_height.argtypes = [c_void_p]
@@ -273,6 +279,7 @@ class DarknetSams:
         free_detections(dets, num)
 
         if draw_results:
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             out_image = draw_result(image, detections)
         else:
             out_image = image

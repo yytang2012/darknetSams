@@ -20,6 +20,9 @@ def camera(model="coco", camera_id=0):
     else:
         m = Coco()
 
+    WINDOW_NAME = "Camera :: {}".format(model)
+    cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(WINDOW_NAME, 1920, 1080)
     cap = cv2.VideoCapture(camera_id)
     while cap.isOpened():
         # Capture frame-by-frame
@@ -28,9 +31,9 @@ def camera(model="coco", camera_id=0):
         if ret:
             t1 = time.time()
             masked_frame, r = m.detect_frame(frame, verbose=False, draw_results=True)
-            cv2.imshow("frame", masked_frame)
+            cv2.imshow(WINDOW_NAME, masked_frame)
             t2 = time.time()
-            print("FPS: {:.2f}, time: {}".format(1 / (t2 - t1), t2 - t1))
+            print("FPS: {:.2f}".format(1 / (t2 - t1)))
             count += 1
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -44,9 +47,11 @@ def video(video_path, model="coco"):
     video_path = os.path.expanduser(video_path)
     assert os.path.isfile(video_path) is True
     # video_path = os.path.expanduser(os.path.join("~/Documents", "videos", "20190217", "94", "20190217-103033-0.avi"))
+
     cap = cv2.VideoCapture(video_path)
-    cv2.namedWindow('frame', cv2.WINDOW_NORMAL)
-    cv2.resizeWindow('frame', 1200, 1000)
+    WINDOW_NAME = "Video :: {}".format(model)
+    cv2.namedWindow(WINDOW_NAME, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(WINDOW_NAME, 1920, 1080)
     if model.lower() == 'cart':
         m = Cart()
     elif model.lower() == 'logo':
@@ -63,7 +68,7 @@ def video(video_path, model="coco"):
             masked_frame, r = m.detect_frame(frame, verbose=0, draw_results=True)
             t2 = time.time()
             print("FPS: {:.2f}".format(1 / (t2 - t1)))
-            cv2.imshow('frame', masked_frame)
+            cv2.imshow(WINDOW_NAME, masked_frame)
         else:
             break
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -71,9 +76,3 @@ def video(video_path, model="coco"):
 
     cap.release()
     cv2.destroyAllWindows()
-
-
-if __name__ == '__main__':
-    camera(model="cart", camera_id=0)
-    # video_path = os.path.join("~/Documents", "videos", "20190217", "94", "20190217-103033-0.avi")
-    # video(video_path, model="cart")
