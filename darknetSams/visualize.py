@@ -15,7 +15,7 @@ def draw_result(image, detections, limit=10, color=None, thickness=2):
         up, left, down, right = bbox
         assert type(left) == int and type(right) == int and type(up) == int and type(down) == int
         cv2.rectangle(__image, (left, up), (right, down), BLUE, thickness)
-        # cv2.putText(_image, "{}:{}:{}".format(hp, item_id, showup_count), (left, up),
-        #             cv2.FONT_HERSHEY_SIMPLEX, 1, RED)
+        cv2.putText(__image, "{}:{:.2f}%".format(class_name, prob*100), (left, up),
+                    cv2.FONT_HERSHEY_DUPLEX, 1, GREEN)
 
     return __image

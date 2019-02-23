@@ -274,7 +274,7 @@ class DarknetSams:
                     right = int(b.x + b.w / 2) + 1
                     up = int(b.y - b.h / 2)
                     down = int(b.y + b.h / 2) + 1
-                    detections.append((name_tag, dets[j].prob[i], (up, left, down, right)))
+                    detections.append((name_tag.decode('utf-8'), dets[j].prob[i], (up, left, down, right)))
         detections = sorted(detections, key=lambda x: -x[1])
         free_detections(dets, num)
 
