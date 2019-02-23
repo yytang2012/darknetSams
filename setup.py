@@ -39,9 +39,10 @@ setup(
     license='MPL-2.0',
     packages=['darknetSams'],
     #   no dependencies in this example
-    #   install_requires=[
-    #       'dependency==1.2.3',
-    #   ],
+    install_requires=[
+        "opencv-python",
+        "tqdm"
+    ],
     #   no scripts in this example
     #   scripts=['bin/a-script'],
     include_package_data=True,
